@@ -9,18 +9,19 @@ use App\Services\Response\Api;
 use App\Services\Database\Instance;
 use Exception;
 
-define("dup_err_code", 11000);
+// define("dup_err_code", 11000);
 class User extends Controller
 {
     public function signup(SignupRequest $request_data)
     {
         $user = $request_data->all();
         $mongo = new Instance();
+
         //Register User
         try {
             $mongo->db->users->insertOne($user);
         } catch (Exception $e) {
-            if ($e->getCode() === dup_err_code) {
+            if ($e->getCode() === 11000) {
                 return Api::response(["message" => "An account is already associated with " . $user['email']], 409);
             }
         }
