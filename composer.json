@@ -11,6 +11,7 @@
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "mailjet/mailjet-apiv3-php": "^1.5",
         "mongodb/mongodb": "^1.10"
     },
     "require-dev": {
