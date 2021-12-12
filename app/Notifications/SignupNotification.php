@@ -8,6 +8,6 @@ class SignupNotification
 {
     public static function verify_account($notification)
     {
-        // Email::send_email($notification);
+        Email::send_email($notification);
     }
 }

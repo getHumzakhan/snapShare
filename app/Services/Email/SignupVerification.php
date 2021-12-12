@@ -7,23 +7,23 @@ use \Mailjet\Client;
 
 class SignupVerification
 {
-    public static function get_mail_body($recipient_email, $recipient_name, $token)
+    public static function get_mail_body($email, $name, $token)
     {
         $body = [
             'Messages' => [
                 [
                     'From' => [
                         'Email' => "snapshareltd@gmail.com",
-                        'Name' => "SnapShare"
+                        'Name' => "snapShare"
                     ],
                     'To' => [
                         [
-                            'Email' => $recipient_email,
-                            'Name' => $recipient_name
+                            'Email' => $email,
+                            'Name' => $name
                         ]
                     ],
                     'Subject' => "Account Verification",
-                    'TextPart' => "http://127.0.0.1:8000/user/verifyAccount/" . $token
+                    'HTMLPart' => EmailTemplate::account_verify($token),
                 ]
             ]
         ];
