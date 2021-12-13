@@ -9,7 +9,7 @@ use App\Services\Response\Api;
 use App\Services\Database\Instance;
 use Exception;
 
-define("dup_err_code", 11000);
+define("duplicate_entry_code", 11000);
 
 class User extends Controller
 {
@@ -25,7 +25,7 @@ class User extends Controller
         try {
             $mongo->db->users->insertOne($user);
         } catch (Exception $e) {
-            if ($e->getCode() === dup_err_code) {
+            if ($e->getCode() === duplicate_entry_code) {
                 return Api::response(["message" => "An account is already associated with " . $user['email']], 409);
             }
         }

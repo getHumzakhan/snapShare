@@ -27,7 +27,7 @@ class SignupRequest extends FormRequest
         return [
             "name" => 'required|not_regex:/[#@$%^&*\/()_=+!<>;"{}\'?]/i|not_regex:/[0-9]/i',
             "email" => 'required|email:filter',
-            "password" => 'required|min:8|alpha_dash',
+            "password" => 'required|min:8|alpha_dash|confirmed',
             "age" => 'required|gt:8|lt:100',
             "image" => 'present',
         ];
