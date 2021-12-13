@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
+use Exception;
 
 class JwtAuth
 {
@@ -24,5 +25,23 @@ class JwtAuth
 
         $jwt = JWT::encode($payload, config('jwt.secret_key'), 'HS256');
         return $jwt;
+    }
+
+    public static function verify($jwt)
+    {
+        try{
+            JWT::decode($jwt, new Key(config('jwt.secret_key'),'HS256'));
+        }
+        catch(Exception $e){
+           return $e->getMessage();
+        }
+        return "hamza";
+        // $authorized_user = $db->users->findOne(["jwt" => $jwt], ["projection" => ["_id" => 1]]);
+
+        // if (isset($authorized_user)) {
+        //     return iterator_to_array($authorized_user);
+        // } else {
+        //     return false;
+        // }
     }
 }

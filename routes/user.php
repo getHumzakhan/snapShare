@@ -7,3 +7,4 @@ Route::post('/signup', [User::class, 'signup']);
 Route::post('/verifyAccount', [User::class, 'verify_account']);
 Route::get('/verifyAccount/{token}', [User::class, 'verify_account_via_url']);
 Route::post('/login',[User::class,'login'])->middleware('login');
+Route::post('/logout',[User::class,'logout'])->middleware('jwt_auth');

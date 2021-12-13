@@ -83,4 +83,9 @@ class User extends Controller
             return $e->getMessage();
         }
     }
+
+    public function logout(Request $request_data)
+    {
+
+    }
 }
