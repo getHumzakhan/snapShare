@@ -7,7 +7,9 @@ use App\Http\Requests\SignupRequest;
 use App\Notifications\SignupNotification as Notification;
 use App\Services\Response\Api;
 use App\Services\Database\Instance;
+use App\Services\Auth\JwtAuth;
 use Exception;
+
 
 define("duplicate_entry_code", 11000);
 
@@ -63,5 +65,21 @@ class User extends Controller
             return view('account_verified');
         else
             return view('already_verified');
+    }
+
+    public function login(Request $user_data)
+    {
+        $id = $user_data['_id'];
+        $email = $user_data['email'];
+
+        $jwt = JwtAuth::generate_jwt($id, $email);
+        $mongo = new Instance();
+
+        try {
+            $mongo->db->users->UpdateOne(['_id' => $id], ['$set' => ['jwt' => $jwt]]);
+            return API::response(["user_data" => $user_data->all()], 200)->withHeaders(["jwt" => $jwt]);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
