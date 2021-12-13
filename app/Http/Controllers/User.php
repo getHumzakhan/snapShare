@@ -20,6 +20,7 @@ class User extends Controller
         $user = $request_data->all();
         $user['verificationToken'] = bin2hex(random_bytes(20));
         $user['isVerified'] = false;
+        $user['jwt'] = null;
 
         $mongo = new Instance();
 

@@ -14,7 +14,10 @@ class Login
     {
         $user = $this->verify($user_credentials);
 
-        if ($user === "invalid password") {
+        if($user === "already logged in"){
+            return Api::response(["Message" => "Already Logged in"], 200);
+        }
+        else if ($user === "invalid password") {
             return Api::response(["Message" => "Invalid Password"], 401);
         } 
         else if ($user === "invalid email") {
@@ -41,10 +44,14 @@ class Login
         $mongo = new Instance();
         $document = $mongo->db->users->findOne(
             ['email' => $user_email],
-            ["projection" => ["_id" => 1, "name" => 1, "email" => 1, "password" => 1, "age" => 1, "image" => 1, "isVerified" => 1, "verificationToken" => 1]]
+            ["projection" => ["_id" => 1, "name" => 1, "email" => 1, "password" => 1, "age" => 1, "image" => 1, "isVerified" => 1, "verificationToken" => 1, "jwt" => 1]]
         );
 
         if (isset($document)) {
+
+            if(!empty($document->jwt)){
+                return "already logged in";
+            }
             if ($document->password === $user_password) {
                 return iterator_to_array($document);
             } 
