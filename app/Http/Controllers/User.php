@@ -45,7 +45,7 @@ class User extends Controller
         $result = $mongo->db->users->updateOne(['verificationToken' => $token], ['$set' => ['isVerified' => true]]);
 
         if (!$result->getMatchedCount())
-            return Api::response(["message" => "Account not found"], 404);
+            return Api::response(["message" => "Unauthorized Request"], 401);
 
         if ($result->getModifiedCount())
             return view('account_verified');
@@ -59,7 +59,7 @@ class User extends Controller
         $result = $mongo->db->users->updateOne(['verificationToken' => $token], ['$set' => ['isVerified' => true]]);
 
         if (!$result->getMatchedCount())
-            return Api::response(["message" => "Account not found"], 404);
+            return Api::response(["message" => "Unauthorized Request"], 401);
 
         if ($result->getModifiedCount())
             return view('account_verified');
