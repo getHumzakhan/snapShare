@@ -30,7 +30,8 @@ class JwtAuth
     public static function verify($jwt)
     {
         try{
-            JWT::decode($jwt, new Key(config('jwt.secret_key'),'HS256'));
+            $decoded_jwt = JWT::decode($jwt, new Key(config('jwt.secret_key'),'HS256'));
+            return $decoded_jwt;
         }
         catch(Exception $e){
            return $e->getMessage();
