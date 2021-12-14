@@ -86,6 +86,12 @@ class User extends Controller
 
     public function logout(Request $request_data)
     {
-
+        $user_id = $request_data->_id;
+        $jwt = $request_data->header('jwt');
+        
+        $mongo = new Instance();
+        $res = $mongo->db->users->updateOne(['_id'=>$user_id],['$set'=>['jwt'=>null]]);
+        
+        return Api::response(["message"=>"Successfully Logged Out"], 200);
     }
 }

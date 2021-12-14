@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Services\Auth\JwtAuth;
+use App\Services\Response\Api;
 
 class Authentication
 {
@@ -18,9 +19,24 @@ class Authentication
     public function handle(Request $request, Closure $next)
     {
         $jwt = $request->header('jwt');
-        $jwt = JwtAuth::verify($jwt);
-        var_dump($jwt);
-        exit;
-        // return $next($request);
+        if(!isset($jwt))
+        {
+            return Api::response(["Error"=>"Unauthorized Request"], 401);
+        }
+
+        $decoded_jwt = JwtAuth::verify($jwt);
+        if($decoded_jwt==="Expired token")
+        {
+            return Api::response(["Message"=>"You need to login first"], 401);
+        }
+
+        //if jwt in request header and db mathces, id is returned in decoded_jwt else false is returned
+        if($decoded_jwt){
+            $request = $request->merge($decoded_jwt);
+            return $next($request);
+        }
+        else{
+            return Api::response(["Message"=>"Unathentic user"], 401);
+        }
     }
 }

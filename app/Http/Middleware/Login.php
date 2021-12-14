@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\Database\Instance;
 use App\Services\Response\Api;
 use App\Notifications\SignupNotification as Notification;
+use App\Services\Auth\JwtAuth;
 
 class Login
 {
@@ -36,7 +37,7 @@ class Login
     }
 
     //returns user's document from db if credentials are valid
-    public function verify($user_credentials)
+   public function verify($user_credentials)
     {
         $user_email = $user_credentials->input('email');
         $user_password = $user_credentials->input('password');
@@ -49,16 +50,25 @@ class Login
 
         if (isset($document)) {
 
-            if(!empty($document->jwt)){
-                return "already logged in";
+            if($document->jwt != null){
+                if(!$this->is_expired($document->jwt))
+                    return "already logged in";
             }
-            if ($document->password === $user_password) {
+
+            if ($document->password === $user_password)
                 return iterator_to_array($document);
-            } 
             else
                 return "invalid password";
         } 
         else
             return "invalid email";
+    }
+
+    public function is_expired($jwt){
+        $decoded_jwt = JwtAuth::verify($jwt);
+        if($decoded_jwt != "Expired token")
+            return false;
+        else
+            return true;
     }
 }
