@@ -38,4 +38,32 @@ class EmailTemplate
                         </body>
                     </html>";
     }
+
+    public static function reset_password($token,$name)
+    {
+        return
+            "<html>
+                        <head>
+                            <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+                        </head>
+                        <body style='margin: 0; background-color: whitesmoke;height:600px;'>
+                            <div style='background-color: SlateBlue; height:50%;'>
+                                <h2 style='text-align: center;color: #fffaf0;font-family: Lato, Helvetica, Arial, sans-serif;padding-top:15px'>
+                                    Hey $name, snapShare got you covered
+                                </h2>
+                                <div style='color:#666666;font-family: Lato, Helvetica, Arial, sans-serif;background-color: white;text-align:center;box-shadow: 1px 1px 10px #fffaf0;border-radius: 7px;width:50%;margin-left:23%;margin-top:5%; padding:20px 20px'>
+                                    <h5 style='color:#666666;font-family: Lato, Helvetica, Arial, sans-serif;padding-top:10px'>
+                                        Copy & paste this code to reset your password.
+                                    </h5>
+                                    <form action='#'style='margin:30px 10px'>
+                                        <input type='text' disabled value=$token style='width:270px;text-align:center;font-size:smaller;font-family: Lato, Helvetica, Arial, sans-serif;background-color: slateblue;color: #fffaf0;align-self: center;box-shadow: 1px 1px 15px slateblue;border-radius: 10px;padding: 15px 15px;'/>
+                                    </form>
+                                    <p style='color:#666666;font-family: Lato, Helvetica, Arial, sans-serif;'>
+                                        Cheers,<br />Team snapShare
+                                    </p>
+                                </div>
+                            </div>
+                        </body>
+                    </html>";
+    }
 }

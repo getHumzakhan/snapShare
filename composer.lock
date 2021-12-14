@@ -988,7 +988,7 @@
             "description": "PSR-7 message implementation that also provides common utility methods",
             "keywords": [
                 "http",
-                "message",
+                "Message",
                 "psr-7",
                 "request",
                 "response",
@@ -2749,7 +2749,7 @@
             "keywords": [
                 "factory",
                 "http",
-                "message",
+                "Message",
                 "psr",
                 "psr-17",
                 "psr-7",
@@ -5936,7 +5936,7 @@
             "description": "A beautiful error page for Laravel applications.",
             "homepage": "https://github.com/facade/ignition",
             "keywords": [
-                "error",
+                "Message",
                 "flare",
                 "laravel",
                 "page"
@@ -6119,7 +6119,7 @@
             "description": "php error handling for cool kids",
             "homepage": "https://filp.github.io/whoops/",
             "keywords": [
-                "error",
+                "Message",
                 "exception",
                 "handling",
                 "library",
@@ -6316,7 +6316,7 @@
                 "cli",
                 "command-line",
                 "console",
-                "error",
+                "Message",
                 "handling",
                 "laravel",
                 "laravel-zero",

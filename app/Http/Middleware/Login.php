@@ -16,13 +16,13 @@ class Login
         $user = $this->verify($user_credentials);
 
         if($user === "already logged in"){
-            return Api::response(["Message" => "Already Logged in"], 200);
+            return Api::response(["Message" => "Already Logged in", "Code"=>"200"], 200);
         }
         else if ($user === "invalid password") {
-            return Api::response(["Message" => "Invalid Password"], 401);
+            return Api::response(["Message" => "Invalid Credentials", "Code"=>"401"], 401);
         } 
         else if ($user === "invalid email") {
-            return Api::response(["Message" => "No account associated with " . $user_credentials->input('email')], 401);
+            return Api::response(["Message" => "No account associated with " . $user_credentials->input('email'), "Code"=>"401"], 401);
         } 
         else {
             if ($user['isVerified']) {
@@ -31,7 +31,7 @@ class Login
             } 
             else {
                 Notification::verify_account($user);
-                return response()->json(["Message" => "Please Verify Your Account First Via Link Sent To Your Email"], 401);
+                return response()->json(["Message" => "Please Verify Your Account First Via Link Sent To Your Email", "Code"=>"401"], 401);
             }
         }
     }

@@ -21,13 +21,13 @@ class Authentication
         $jwt = $request->header('jwt');
         if(!isset($jwt))
         {
-            return Api::response(["Error"=>"Unauthorized Request"], 401);
+            return Api::response(["Message"=>"Unauthorized Request", "Code"=>"401"], 401);
         }
 
         $decoded_jwt = JwtAuth::verify($jwt);
         if($decoded_jwt==="Expired token")
         {
-            return Api::response(["Message"=>"You need to login first"], 401);
+            return Api::response(["Message"=>"You need to login first", "Code"=>"401"], 401);
         }
 
         //if jwt in request header and db mathces, id is returned in decoded_jwt else false is returned
@@ -36,7 +36,7 @@ class Authentication
             return $next($request);
         }
         else{
-            return Api::response(["Message"=>"Unathentic user"], 401);
+            return Api::response(["Message"=>"Unathentic user", "Code"=>"401"], 401);
         }
     }
 }
