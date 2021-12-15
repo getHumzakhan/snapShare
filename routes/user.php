@@ -15,3 +15,4 @@ Route::post('/verifyForgotPassToken',[User::class, 'verify_forgot_pass_token']);
 Route::post('/resetPassword',[User::class, 'reset_pass'])->middleware('reset_password');
 
 Route::get('/viewProfile',[User::class, 'view_profile'])->middleware('jwt_auth');
+Route::post('/updateProfile',[User::class, 'update_profile'])->middleware('jwt_auth');

@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SignupRequest;
 use App\Http\Requests\ForgotPassword;
 use App\Http\Requests\ResetPass;
-use App\Http\Requests\VerifyResetToken ;
+use App\Http\Requests\VerifyResetToken;
+use App\Http\Requests\UpdateProfile;
 use App\Notifications\SignupNotification as Notification;
 use App\Services\Response\Api;
 use App\Services\Database\Instance;
@@ -26,14 +27,12 @@ class User extends Controller
         $user['isVerified'] = false;
         $user['jwt'] = null;
 
-
-        $mongo = new Instance();
-
         //Register User
         try {
                 $destinationPath = 'uploads/user/dp/'. bin2hex(random_bytes(20));
                 $url = $destinationPath . "/" . $image->getClientOriginalName();
                 $user['image']= $url;
+                $mongo = new Instance();
                 $mongo->db->users->insertOne($user);
                 $image->move($destinationPath, $image->getClientOriginalName());
         } 
@@ -181,5 +180,43 @@ class User extends Controller
         $user_profile['_id']=strval($user_id);
 
         return Api::response(["data"=>$user_profile,"code"=>200],200);
+    }
+
+    public function update_profile(UpdateProfile $request)
+    {
+        $updated_user = $request->all();
+        $mongo = new Instance();
+        if($request->hasFile('image'))
+        {
+            try{
+                $user_id = $request->input('_id');
+                $user_data = $mongo->db->users->findOne(['_id'=>$user_id]);
+                $destinationPath = 'uploads/user/dp/'. substr($user_data->image,16,40);
+            
+                $image = $request->file('image');
+                $url = $destinationPath . "/" . $image->getClientOriginalName();
+                $updated_user['image']= $url;
+    
+                $mongo->db->users->updateOne(['_id'=>$user_id], ['$set'=>$updated_user]);
+                $image->move($destinationPath, $image->getClientOriginalName());
+                
+                return Api::response(["Message"=>"Profile Updated Successfully", "Code"=>200], 200);
+            }catch(Exception $e)
+            {
+                return $e->getMessage();
+            }
+        }
+        else
+        {
+            try{
+                $user_id = $request->input('_id');
+                $mongo->db->users->updateOne(['_id'=>$user_id],['$set'=>$updated_user]);
+                return Api::response(["Message"=>"Profile Updated Successfully", "Code"=>200], 200);
+            }
+            catch(Exception $e){
+                return $e->getMessage();
+            }
+           
+        }
     }
 }
