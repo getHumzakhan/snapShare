@@ -17,7 +17,7 @@ class JwtAuth
         $payload = array(
             "iss" => "snapShare",
             "iat" => time(),
-            "exp" => time() + 180,
+            "exp" => time() + 3600,
             "data" => array(
                 "id" => strval($id),
                 "email" => $email

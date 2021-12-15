@@ -20,17 +20,24 @@ class User extends Controller
     public function signup(SignupRequest $request_data)
     {
         $user = $request_data->all();
+        $image = $user['image'];
         unset($user['password_confirmation']);
         $user['verificationToken'] = bin2hex(random_bytes(20));
         $user['isVerified'] = false;
         $user['jwt'] = null;
 
+
         $mongo = new Instance();
 
         //Register User
         try {
-            $mongo->db->users->insertOne($user);
-        } catch (Exception $e) {
+                $destinationPath = 'uploads/user/dp/'. bin2hex(random_bytes(20));
+                $url = $destinationPath . "/" . $image->getClientOriginalName();
+                $user['image']= $url;
+                $mongo->db->users->insertOne($user);
+                $image->move($destinationPath, $image->getClientOriginalName());
+        } 
+        catch (Exception $e) {
             define("duplicate_entry_code", 11000);
             if ($e->getCode() === duplicate_entry_code) {
                 return Api::response(["Message" => "An account is already associated with " . $user['email'], "Code"=>"409"], 409);
@@ -157,5 +164,22 @@ class User extends Controller
         {
             return $e->getMessage();
         }
+    }
+
+    public function view_profile(Request $request)
+    {
+        $user_id = $request->input('_id');
+        $mongo = new Instance();
+        $user_profile = $mongo->db->users->findOne(
+            ['_id'=>$user_id],
+            ['projection'=>['_id'=>1,'name'=>1,'email'=>1,'password'=>1,'image'=>1,'age'=>1,]]
+        );
+
+        $user_profile = iterator_to_array($user_profile);
+        $image_path = "http://127.0.0.1:8000". '/' .$user_profile['image'];
+        $user_profile['image'] = $image_path;
+        $user_profile['_id']=strval($user_id);
+
+        return Api::response(["data"=>$user_profile,"code"=>200],200);
     }
 }
