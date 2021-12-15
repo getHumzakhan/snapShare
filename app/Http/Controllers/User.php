@@ -15,9 +15,6 @@ use App\Services\Email\ResetPassword;
 
 use Exception;
 
-
-define("duplicate_entry_code", 11000);
-
 class User extends Controller
 {
     public function signup(SignupRequest $request_data)
@@ -34,6 +31,7 @@ class User extends Controller
         try {
             $mongo->db->users->insertOne($user);
         } catch (Exception $e) {
+            define("duplicate_entry_code", 11000);
             if ($e->getCode() === duplicate_entry_code) {
                 return Api::response(["Message" => "An account is already associated with " . $user['email'], "Code"=>"409"], 409);
             }
