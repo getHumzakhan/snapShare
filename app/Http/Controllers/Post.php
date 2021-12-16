@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use App\Services\Database\Instance;
 use App\Http\Requests\CreatePost;
+use App\Http\Requests\DeletePost;
 use App\Services\Response\Api;
+
 
 class Post extends Controller
 {
@@ -40,5 +43,21 @@ class Post extends Controller
         $post['creation_date'] = date('d/m/y');
         $post['user_id'] = $user_id;
         return $post;
+    }
+
+    public function delete(DeletePost $request)
+    {
+        $post_id = $request->input('_id');
+        $img_url = $request->input('image');
+        try{
+            $mongo = new Instance();
+            $mongo->db->posts->deleteOne(['_id' => $post_id]);
+            $file_path = public_path() . '/' . base64_decode($img_url);
+            FILE::delete($file_path);
+            return API::response(["Message" => "Post Deleted"], 200);
+        }
+        catch(Exception $e){
+            return $e->getMessage();
+        }    
     }
 }

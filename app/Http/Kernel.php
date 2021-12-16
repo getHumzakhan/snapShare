@@ -13,6 +13,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\HandleCors::class,
@@ -45,6 +46,11 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        'delete_post' => [
+            \App\Http\Middleware\Authentication::class,
+            \App\Http\Middleware\DeletePost::class,
+        ]
     ];
 
     /**
