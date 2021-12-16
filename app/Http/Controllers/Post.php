@@ -49,11 +49,13 @@ class Post extends Controller
     {
         $post_id = $request->input('_id');
         $img_url = $request->input('image');
+        $user_id = $request->input('user_id');
         try{
             $mongo = new Instance();
             $mongo->db->posts->deleteOne(['_id' => $post_id]);
             $file_path = public_path() . '/' . base64_decode($img_url);
             FILE::delete($file_path);
+
             return API::response(["Message" => "Post Deleted"], 200);
         }
         catch(Exception $e){
