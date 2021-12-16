@@ -62,4 +62,24 @@ class Post extends Controller
             return $e->getMessage();
         }    
     }
+
+    public function view(Request $request)
+    {
+        $user_id = strval($request->input('_id'));
+        try{
+            $mongo = new Instance();
+            $posts = $mongo->db->posts->find(['user_id' => $user_id], ['projection'=>['image'=>1]]);
+            $posts = iterator_to_array($posts);
+            
+            for($i=0; $i<count($posts); $i++)
+            {
+                $img_url = base64_decode($posts[$i]['image']);
+                $user_posts[$i] = "http://127.0.0.1:8000". '/' . $img_url;
+            }
+            return API::response($user_posts, 200);
+        }
+        catch(Exception $e){
+            return $e->getMessage();
+        }
+    }
 }
