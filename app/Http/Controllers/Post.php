@@ -125,7 +125,7 @@ class Post extends Controller
         try{
             $mongo = new Instance();
             $mongo->db->posts->updateOne(['_id' => $post_id],['$set' => ['privacy' => $updated_privacy ]]);
-            return API::response(['Message' => 'Privacy Uodated', 'Code'=> '200'], 200);
+            return API::response(['Message' => 'Privacy Updated', 'Code'=> '200'], 200);
         }
         catch(Exception $e){
             return $e->getMessage();
