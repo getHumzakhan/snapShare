@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use App\Services\Database\Instance;
 use App\Http\Requests\CreatePost;
 use App\Http\Requests\DeletePost;
+use App\Http\Requests\SearchPost;
 use App\Services\Response\Api;
 
 
@@ -36,11 +37,13 @@ class Post extends Controller
 
     public function render_post($post,$url,$user_id,$mime_type)
     {
+        $ext = ltrim($mime_type,'image/');
+
         $post['image'] = base64_encode($url);
         $post['privacy'] = "hidden";
-        $post['ext'] = $mime_type;
-        $post['creation_time'] = date('h:i:s');
-        $post['creation_date'] = date('d/m/y');
+        $post['ext'] = $ext;
+        $post['creation_time'] = strtotime(date('h:i:s'));
+        $post['creation_date'] = strtotime(date('y-m-d'));
         $post['user_id'] = $user_id;
         return $post;
     }
@@ -71,14 +74,45 @@ class Post extends Controller
             $posts = $mongo->db->posts->find(['user_id' => $user_id], ['projection'=>['image'=>1]]);
             $posts = iterator_to_array($posts);
             
-            for($i=0; $i<count($posts); $i++)
+             if(count($posts))
             {
-                $img_url = base64_decode($posts[$i]['image']);
-                $user_posts[$i] = "http://127.0.0.1:8000". '/' . $img_url;
+                for($i = 0; $i < count($posts); $i++)
+                {
+                    $img_url = base64_decode($posts[$i]['image']);
+                    $user_posts[$i] = "http://127.0.0.1:8000". '/' . $img_url;
+                }
+                    return API::response($user_posts, 200);
             }
-            return API::response($user_posts, 200);
+            else
+                return API::response(["Message"=>"No Images found", "Code"=>404], 404);
         }
         catch(Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    public function search(SearchPost $request)
+    {
+        $filters = $request->input('filters');
+        try{
+            $mongo = new Instance();
+            $posts = $mongo->db->posts->find($filters, ['projection'=>['image'=>1]]);
+            $posts = iterator_to_array($posts);
+
+            if(count($posts))
+            {
+                for($i = 0; $i < count($posts); $i++)
+                {
+                    $img_url = base64_decode($posts[$i]['image']);
+                    $user_posts[$i] = "http://127.0.0.1:8000". '/' . $img_url;
+                }
+                    return API::response($user_posts, 200);
+            }
+            else
+                return API::response(["Message"=>"No Images found", "Code"=>404], 404);
+
+        }catch(Exception $e)
+        {
             return $e->getMessage();
         }
     }

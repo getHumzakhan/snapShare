@@ -50,6 +50,11 @@ class Kernel extends HttpKernel
         'delete_post' => [
             \App\Http\Middleware\Authentication::class,
             \App\Http\Middleware\DeletePost::class,
+        ],
+
+        'search_post' => [
+            \App\Http\Middleware\Authentication::class,
+            \App\Http\Middleware\SearchPost::class,
         ]
     ];
 
