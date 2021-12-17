@@ -55,6 +55,11 @@ class Kernel extends HttpKernel
         'search_post' => [
             \App\Http\Middleware\Authentication::class,
             \App\Http\Middleware\SearchPost::class,
+        ],
+
+        'update_privacy' => [
+            \App\Http\Middleware\Authentication::class,
+            \App\Http\Middleware\UpdatePrivacy::class,
         ]
     ];
 

@@ -8,6 +8,7 @@ use App\Services\Database\Instance;
 use App\Http\Requests\CreatePost;
 use App\Http\Requests\DeletePost;
 use App\Http\Requests\SearchPost;
+use App\Http\Requests\UpdatePrivacy;
 use App\Services\Response\Api;
 
 
@@ -113,6 +114,20 @@ class Post extends Controller
 
         }catch(Exception $e)
         {
+            return $e->getMessage();
+        }
+    }
+
+    public function update_Privacy(UpdatePrivacy $request)
+    {
+        $post_id = new \MongoDB\BSON\ObjectId($request->post_id);
+        $updated_privacy = $request->privacy;
+        try{
+            $mongo = new Instance();
+            $mongo->db->posts->updateOne(['_id' => $post_id],['$set' => ['privacy' => $updated_privacy ]]);
+            return API::response(['Message' => 'Privacy Uodated', 'Code'=> '200'], 200);
+        }
+        catch(Exception $e){
             return $e->getMessage();
         }
     }
