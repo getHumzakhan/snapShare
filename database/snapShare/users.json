@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "61bbc80db55c000037006fa2"
+  },
+  "name": "Hamza Khan",
+  "email": "gethumzakhan@gmail.com",
+  "password": "Hamza_Khan",
+  "age": "25",
+  "image": "uploads/user/dp/2e397d259ead08ff61d3967fd24404f1080b1f62/EOPE4600.JPG",
+  "verificationToken": "e1bdb0e59754819150574718d22e7b73d4ee155b",
+  "isVerified": true,
+  "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzbmFwU2hhcmUiLCJpYXQiOjE2Mzk4OTUwMzMsImV4cCI6MTYzOTg5ODYzMywiZGF0YSI6eyJpZCI6IjYxYmJjODBkYjU1YzAwMDAzNzAwNmZhMiIsImVtYWlsIjoiZ2V0aHVtemFraGFuQGdtYWlsLmNvbSJ9fQ.zbB-ynvG_ZatO0u2mBscZapHG8Q0FTxyiNkKyz0wqaM"
+},{
+  "_id": {
+    "$oid": "61bc112bb55c000037006fb1"
+  },
+  "name": "Muhammad Hamza Khan",
+  "email": "khanhumza37@gmail.com",
+  "password": "Hamza_123",
+  "age": "26",
+  "image": "uploads/user/dp/bf355ad07d08e67a37ffb67db01a95590426111f/IMG_1528.JPG",
+  "verificationToken": "3528e55d6b426ff74d29a0b1cb01c263eb0536b5",
+  "isVerified": true,
+  "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzbmFwU2hhcmUiLCJpYXQiOjE2Mzk4OTQ4OTEsImV4cCI6MTYzOTg5ODQ5MSwiZGF0YSI6eyJpZCI6IjYxYmMxMTJiYjU1YzAwMDAzNzAwNmZiMSIsImVtYWlsIjoia2hhbmh1bXphMzdAZ21haWwuY29tIn19.Ot1pXFzROhmr3x_zt3lruhF2VRD_dKYvEcGB-_lp-cA"
+},{
+  "_id": {
+    "$oid": "61bec36c121d00004d000774"
+  },
+  "name": "Hamza Khan",
+  "email": "ohumzakhan@gmail.com",
+  "password": "Hamza_123",
+  "age": "25",
+  "image": "uploads/user/dp/09acef452670a7ec51fac2fdb8227661339c24fd/EOPE4600.JPG",
+  "verificationToken": "4f1656415c9765f3168dd055880cf581b393b511",
+  "isVerified": true,
+  "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzbmFwU2hhcmUiLCJpYXQiOjE2Mzk4OTU1MjgsImV4cCI6MTYzOTg5OTEyOCwiZGF0YSI6eyJpZCI6IjYxYmVjMzZjMTIxZDAwMDA0ZDAwMDc3NCIsImVtYWlsIjoib2h1bXpha2hhbkBnbWFpbC5jb20ifX0.YDEijl8B_bstBknfzjmyvAson0T2ZvVD4bpueHy_69w"
+}]
