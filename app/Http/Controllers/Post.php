@@ -131,4 +131,10 @@ class Post extends Controller
             return $e->getMessage();
         }
     }
+
+    public function share(Request $request)
+    {
+        $img_path = $request->image_path;
+        return response()->file(public_path(base64_decode($img_path)));
+    }
 }
