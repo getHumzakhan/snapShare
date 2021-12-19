@@ -9,6 +9,8 @@ use App\Http\Requests\CreatePost;
 use App\Http\Requests\DeletePost;
 use App\Http\Requests\SearchPost;
 use App\Http\Requests\UpdatePrivacy;
+use App\Http\Requests\AllowAccess;
+use App\Http\Requests\RemoveAccess;
 use App\Services\Response\Api;
 
 
@@ -136,5 +138,43 @@ class Post extends Controller
     {
         $img_path = $request->image_path;
         return response()->file(public_path(base64_decode($img_path)));
+    }
+
+    public function allow_access(AllowAccess $request)
+    {
+        try{
+            $post_id = new \MongoDB\BSON\ObjectId($request->input('post_id'));
+            $email = $request->input('email');
+
+            $mongo = new Instance();
+            $email = str_replace(".","",$email);
+            $mongo->db->posts->updateOne(['_id' => $post_id],['$set' => ["shared_with.$email" => true]]);
+            return Api::response(["Message" => "Access Granted", "Code" => "200"], 200);
+        }
+        catch(Exception $e){
+            define("cant_process_objectId", 0);
+            if($e->getCode() === cant_process_objectId){
+                return Api::response(["Message" => "Post not found", "Code" => "404"], 404);
+            }
+        }
+    }
+
+    public function remove_access(RemoveAccess $request)
+    {
+        try{
+            $post_id = new \MongoDB\BSON\ObjectId($request->input('post_id'));
+            $email = $request->input('email');
+
+            $mongo = new Instance();
+            $email = str_replace(".","",$email);
+            $mongo->db->posts->updateOne(['_id' => $post_id],['$set' => ["shared_with.$email"=> false]]);
+            return Api::response(["Message" => "Access Removed", "Code" => "200"], 200);
+        }
+        catch(Exception $e){
+            define("cant_process_objectId", 0);
+            if($e->getCode() === cant_process_objectId){
+                return Api::response(["Message" => "Post not found", "Code" => "404"], 404);
+            }
+        }
     }
 }

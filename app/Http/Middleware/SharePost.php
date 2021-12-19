@@ -37,9 +37,15 @@ class SharePost
                         }
                         if($decoded_jwt){
                             $user_id = $decoded_jwt['_id'];
+                            if(strval($user_id)===$post->user_id){
+                                $request = $request->merge(["image_path" => $post->image]);
+                                return $next($request);
+                            }
+                            
                             $user = $mongo->db->users->findOne(['_id' => $user_id], ['projection' => ['email'=>1]]);
-
-                            if(isset($post->shared_with[$user->email]) && $post->shared_with[$user->email])
+                            $user_email = str_replace(".","",$user->email);
+            
+                            if(isset($post->shared_with[$user_email]) && $post->shared_with[$user_email])
                             {
                                 $request = $request->merge(["image_path" => $post->image]);
                                 return $next($request);

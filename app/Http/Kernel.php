@@ -57,13 +57,23 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\SearchPost::class,
         ],
 
-         'share_post' => [
-            \App\Http\Middleware\SharePost::class,
-         ],
-
         'update_privacy' => [
             \App\Http\Middleware\Authentication::class,
             \App\Http\Middleware\UpdatePrivacy::class,
+        ],
+
+        'share_post' => [
+            \App\Http\Middleware\SharePost::class,
+        ],
+
+        'allow_access' => [
+            \App\Http\Middleware\Authentication::class,
+            \App\Http\Middleware\AllowPostAccess::class,
+        ], 
+
+        'remove_access' => [
+            \App\Http\Middleware\Authentication::class,
+            \App\Http\Middleware\RemovePostAccess::class,
         ]
     ];
 
