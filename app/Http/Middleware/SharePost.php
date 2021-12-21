@@ -20,7 +20,35 @@ class SharePost
             if(isset($post)){
                 if($post->privacy === "hidden")
                 {
-                     return Api::response(['Message' => 'Access Forbidden', 'Code' => 403], 403);
+                    if($request->header('jwt'))
+                    {
+                        $decoded_jwt = JwtAuth::verify($request->header('jwt'));
+                        if($decoded_jwt === "Expired token")
+                        {
+                           return Api::response(['Message' => 'You need to signin first', 'Code' => 401], 401);
+                        }
+                        
+                        if($decoded_jwt)
+                        {
+                            $user_id = $decoded_jwt['_id'];
+                            if(strval($user_id)===$post->user_id){
+                                $request = $request->merge(["image_path" => $post->image]);
+                                return $next($request);
+                            }
+                            else
+                            {
+                                return Api::response(['Message' => 'Unauthentic User', 'Code' => 401], 401);
+                            }
+                        }
+                        else
+                        {
+                            return Api::response(['Message' => 'Unauthentic User', 'Code' => 401], 401);
+                        }
+                    }
+                    else
+                    {
+                        return Api::response(['Message' => 'Access Forbidden', 'Code' => 403], 403);
+                    }
                 }
 
                 if($post->privacy === "public"){
