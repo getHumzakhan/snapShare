@@ -20,14 +20,14 @@ class EmailTemplate
                                     <h5 style='color:#666666;font-family: Lato, Helvetica, Arial, sans-serif;padding-top:10px'>
                                         We're excited to have you get started. First, you need to confirm your account. Just press the button below.
                                     </h5>
-                                    <form action='http://127.0.0.1:8000/user/verifyAccount' method='post' style='margin:30px 10px'>
+                                    <form action='http://snapshareltd.herokuapp.com/user/verifyAccount' method='post' style='margin:30px 10px'>
                                         <input type='hidden' name='token' value=$token>
                                         <input type='submit' value='Verify Account' style='font-size:smaller;font-family: Lato, Helvetica, Arial, sans-serif;background-color: slateblue;color: #fffaf0;align-self: center;box-shadow: 1px 1px 15px slateblue;border-radius: 10px;padding: 15px 15px;'/>
                                     </form>
                                     <p style='font-size: smaller;color:#666666;font-family: Lato, Helvetica, Arial, sans-serif;padding-top:40px;'>
                                         You can also hit the link below to verify account
                                     </p>
-                                    <a style='font-size: xx-small;color:#666666;font-family: Lato, Helvetica, Arial, sans-serif;padding-top:0px' href='http://127.0.0.1:8000/user/verifyAccount/$token'>
+                                    <a style='font-size: xx-small;color:#666666;font-family: Lato, Helvetica, Arial, sans-serif;padding-top:0px' href='http://snapshareltd.herokuapp.com/user/verifyAccount/$token'>
                                         https://www.verifyMe.snapShareltd
                                     </a>
                                     <p style='color:#666666;font-family: Lato, Helvetica, Arial, sans-serif;'>

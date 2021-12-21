@@ -1,5 +1,5 @@
 <?php
 
 return [
-    "secret_key" => env("JWT_SECRET_KEY", NULL)
+    "secret_key" => getenv("JWT_SECRET_KEY", NULL)
 ];
