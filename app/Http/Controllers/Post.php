@@ -82,7 +82,7 @@ class Post extends Controller
                 for($i = 0; $i < count($posts); $i++)
                 {
                     $img_url = base64_decode($posts[$i]['image']);
-                    $user_posts[$i] = "http://127.0.0.1:8000". '/' . $img_url;
+                    $user_posts[$i] = "https://snapshareltd.herokuapp.com". '/' . $img_url;
                 }
                     return API::response($user_posts, 200);
             }
@@ -107,7 +107,7 @@ class Post extends Controller
                 for($i = 0; $i < count($posts); $i++)
                 {
                     $img_url = base64_decode($posts[$i]['image']);
-                    $user_posts[$i] = "http://127.0.0.1:8000". '/' . $img_url;
+                    $user_posts[$i] = "https://snapshareltd.herokuapp.com". '/' . $img_url;
                 }
                     return API::response($user_posts, 200);
             }

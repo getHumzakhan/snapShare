@@ -175,7 +175,7 @@ class User extends Controller
         );
 
         $user_profile = iterator_to_array($user_profile);
-        $image_path = "http://127.0.0.1:8000". '/' .$user_profile['image'];
+        $image_path = $_SERVER['SERVER_NAME'] . '/' .$user_profile['image'];
         $user_profile['image'] = $image_path;
         $user_profile['_id']=strval($user_id);
 
