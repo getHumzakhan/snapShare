@@ -94,7 +94,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'login' => \App\http\Middleware\Login::class,
+        'login' => \App\Http\Middleware\Login::class,
         'jwt_auth' => \App\Http\Middleware\Authentication::class,
         'forgot_pass_token' => \App\Http\Middleware\ForgotPassToken::class,
         'reset_password' => \App\Http\Middleware\ResetPassword::class
